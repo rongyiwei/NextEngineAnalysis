@@ -1,0 +1,315 @@
+public abstract class com.go.gl.graphics.GLShaderProgram implements com.go.gl.graphics.TextureListener {
+  static int f;
+
+  int g;
+
+  java.lang.String h;
+
+  java.lang.String i;
+
+  static {};
+    Code:
+       0: aconst_null   
+       1: putstatic     #19                 // Field a:Ljava/lang/String;
+       4: return        
+
+  public com.go.gl.graphics.GLShaderProgram();
+    Code:
+       0: aload_0       
+       1: invokespecial #22                 // Method java/lang/Object."<init>":()V
+       4: return        
+
+  public com.go.gl.graphics.GLShaderProgram(android.content.res.Resources, java.lang.String, java.lang.String);
+    Code:
+       0: aload_0       
+       1: aload_1       
+       2: aload_2       
+       3: invokestatic  #27                 // Method loadFromAssetsFile:(Landroid/content/res/Resources;Ljava/lang/String;)Ljava/lang/String;
+       6: aload_1       
+       7: aload_3       
+       8: invokestatic  #27                 // Method loadFromAssetsFile:(Landroid/content/res/Resources;Ljava/lang/String;)Ljava/lang/String;
+      11: invokespecial #30                 // Method "<init>":(Ljava/lang/String;Ljava/lang/String;)V
+      14: return        
+
+  public com.go.gl.graphics.GLShaderProgram(java.lang.String, java.lang.String);
+    Code:
+       0: aload_0       
+       1: invokespecial #22                 // Method java/lang/Object."<init>":()V
+       4: aload_0       
+       5: aload_1       
+       6: putfield      #32                 // Field h:Ljava/lang/String;
+       9: aload_0       
+      10: aload_2       
+      11: putfield      #34                 // Field i:Ljava/lang/String;
+      14: aload_0       
+      15: new           #36                 // class java/lang/StringBuilder
+      18: dup           
+      19: ldc           #38                 // String init program 
+      21: invokespecial #41                 // Method java/lang/StringBuilder."<init>":(Ljava/lang/String;)V
+      24: aload_0       
+      25: invokevirtual #45                 // Method java/lang/Object.toString:()Ljava/lang/String;
+      28: invokevirtual #49                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      31: invokevirtual #50                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      34: putfield      #52                 // Field b:Ljava/lang/String;
+      37: aload_0       
+      38: new           #36                 // class java/lang/StringBuilder
+      41: dup           
+      42: ldc           #54                 // String bind program 
+      44: invokespecial #41                 // Method java/lang/StringBuilder."<init>":(Ljava/lang/String;)V
+      47: aload_0       
+      48: invokevirtual #45                 // Method java/lang/Object.toString:()Ljava/lang/String;
+      51: invokevirtual #49                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      54: invokevirtual #50                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      57: putfield      #56                 // Field c:Ljava/lang/String;
+      60: return        
+
+  static void b();
+    Code:
+       0: iconst_0      
+       1: putstatic     #146                // Field f:I
+       4: return        
+
+  public static java.lang.String loadFromAssetsFile(android.content.res.Resources, java.lang.String);
+    Code:
+       0: getstatic     #19                 // Field a:Ljava/lang/String;
+       3: ifnonnull     112
+       6: aload_0       
+       7: invokevirtual #158                // Method android/content/res/Resources.getAssets:()Landroid/content/res/AssetManager;
+      10: aload_1       
+      11: invokevirtual #164                // Method android/content/res/AssetManager.open:(Ljava/lang/String;)Ljava/io/InputStream;
+      14: astore        14
+      16: aload         14
+      18: astore_2      
+      19: new           #166                // class java/io/ByteArrayOutputStream
+      22: dup           
+      23: invokespecial #167                // Method java/io/ByteArrayOutputStream."<init>":()V
+      26: astore_3      
+      27: aload_2       
+      28: invokevirtual #172                // Method java/io/InputStream.read:()I
+      31: istore        5
+      33: iload         5
+      35: bipush        -1
+      37: if_icmpne     174
+      40: aload_3       
+      41: invokevirtual #176                // Method java/io/ByteArrayOutputStream.toByteArray:()[B
+      44: astore        6
+      46: new           #178                // class java/lang/String
+      49: dup           
+      50: aload         6
+      52: ldc           #180                // String UTF-8
+      54: invokespecial #183                // Method java/lang/String."<init>":([BLjava/lang/String;)V
+      57: astore        7
+      59: aload         7
+      61: ldc           #185                // String \r\n
+      63: ldc           #187                // String \n
+      65: invokevirtual #191                // Method java/lang/String.replaceAll:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+      68: astore        8
+      70: aload_3       
+      71: invokevirtual #194                // Method java/io/ByteArrayOutputStream.close:()V
+      74: aload_2       
+      75: invokevirtual #195                // Method java/io/InputStream.close:()V
+      78: aload         8
+      80: areturn       
+      81: astore        13
+      83: aload         13
+      85: invokevirtual #198                // Method java/io/IOException.printStackTrace:()V
+      88: new           #200                // class java/lang/RuntimeException
+      91: dup           
+      92: new           #36                 // class java/lang/StringBuilder
+      95: dup           
+      96: ldc           #202                // String GLShaderProgram: IOException: open assets: 
+      98: invokespecial #41                 // Method java/lang/StringBuilder."<init>":(Ljava/lang/String;)V
+     101: aload_1       
+     102: invokevirtual #49                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     105: invokevirtual #50                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     108: invokespecial #203                // Method java/lang/RuntimeException."<init>":(Ljava/lang/String;)V
+     111: athrow        
+     112: new           #205                // class java/io/FileInputStream
+     115: dup           
+     116: new           #36                 // class java/lang/StringBuilder
+     119: dup           
+     120: getstatic     #19                 // Field a:Ljava/lang/String;
+     123: invokestatic  #209                // Method java/lang/String.valueOf:(Ljava/lang/Object;)Ljava/lang/String;
+     126: invokespecial #41                 // Method java/lang/StringBuilder."<init>":(Ljava/lang/String;)V
+     129: aload_1       
+     130: invokevirtual #49                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     133: invokevirtual #50                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     136: invokespecial #210                // Method java/io/FileInputStream."<init>":(Ljava/lang/String;)V
+     139: astore_2      
+     140: goto          19
+     143: astore        12
+     145: aload         12
+     147: invokevirtual #211                // Method java/io/FileNotFoundException.printStackTrace:()V
+     150: new           #200                // class java/lang/RuntimeException
+     153: dup           
+     154: new           #36                 // class java/lang/StringBuilder
+     157: dup           
+     158: ldc           #213                // String GLShaderProgram: FileNotFoundException: open file: 
+     160: invokespecial #41                 // Method java/lang/StringBuilder."<init>":(Ljava/lang/String;)V
+     163: aload_1       
+     164: invokevirtual #49                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     167: invokevirtual #50                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     170: invokespecial #203                // Method java/lang/RuntimeException."<init>":(Ljava/lang/String;)V
+     173: athrow        
+     174: aload_3       
+     175: iload         5
+     177: invokevirtual #216                // Method java/io/ByteArrayOutputStream.write:(I)V
+     180: goto          27
+     183: astore        4
+     185: aload         4
+     187: invokevirtual #198                // Method java/io/IOException.printStackTrace:()V
+     190: new           #200                // class java/lang/RuntimeException
+     193: dup           
+     194: ldc           #218                // String GLShaderProgram: IOException: baos.write(ch);
+     196: invokespecial #203                // Method java/lang/RuntimeException."<init>":(Ljava/lang/String;)V
+     199: athrow        
+     200: astore        11
+     202: aload         11
+     204: invokevirtual #219                // Method java/io/UnsupportedEncodingException.printStackTrace:()V
+     207: new           #200                // class java/lang/RuntimeException
+     210: dup           
+     211: ldc           #221                // String GLShaderProgram: UnsupportedEncodingException
+     213: invokespecial #203                // Method java/lang/RuntimeException."<init>":(Ljava/lang/String;)V
+     216: athrow        
+     217: astore        9
+     219: aload         9
+     221: invokevirtual #198                // Method java/io/IOException.printStackTrace:()V
+     224: new           #200                // class java/lang/RuntimeException
+     227: dup           
+     228: ldc           #223                // String GLShaderProgram: IOException: baos.close();
+     230: invokespecial #203                // Method java/lang/RuntimeException."<init>":(Ljava/lang/String;)V
+     233: athrow        
+     234: astore        10
+     236: aload         10
+     238: invokevirtual #198                // Method java/io/IOException.printStackTrace:()V
+     241: new           #200                // class java/lang/RuntimeException
+     244: dup           
+     245: ldc           #225                // String GLShaderProgram: IOException: in.close();
+     247: invokespecial #203                // Method java/lang/RuntimeException."<init>":(Ljava/lang/String;)V
+     250: athrow        
+    Exception table:
+       from    to  target type
+           6    16    81   Class java/io/IOException
+          27    33   183   Class java/io/IOException
+          46    59   200   Class java/io/UnsupportedEncodingException
+          70    74   217   Class java/io/IOException
+          74    78   234   Class java/io/IOException
+         112   140   143   Class java/io/FileNotFoundException
+         174   180   183   Class java/io/IOException
+
+  public boolean bind();
+    Code:
+       0: iconst_0      
+       1: istore_1      
+       2: aload_0       
+       3: getfield      #141                // Field g:I
+       6: ifne          28
+       9: aload_0       
+      10: invokespecial #228                // Method a:()Z
+      13: ifne          18
+      16: iload_1       
+      17: ireturn       
+      18: aload_0       
+      19: getfield      #52                 // Field b:Ljava/lang/String;
+      22: invokestatic  #121                // Method com/go/gl/graphics/GLError.checkGLError:(Ljava/lang/String;)Z
+      25: ifne          16
+      28: getstatic     #146                // Field f:I
+      31: aload_0       
+      32: getfield      #141                // Field g:I
+      35: if_icmpeq     94
+      38: aload_0       
+      39: getfield      #141                // Field g:I
+      42: putstatic     #146                // Field f:I
+      45: aload_0       
+      46: getfield      #141                // Field g:I
+      49: invokestatic  #231                // Method android/opengl/GLES20.glUseProgram:(I)V
+      52: aload_0       
+      53: invokevirtual #234                // Method onProgramBind:()V
+      56: aload_0       
+      57: getfield      #56                 // Field c:Ljava/lang/String;
+      60: invokestatic  #121                // Method com/go/gl/graphics/GLError.checkGLError:(Ljava/lang/String;)Z
+      63: ifeq          94
+      66: ldc           #81                 // String GLERROR
+      68: new           #36                 // class java/lang/StringBuilder
+      71: dup           
+      72: ldc           #236                // String mProgram=
+      74: invokespecial #41                 // Method java/lang/StringBuilder."<init>":(Ljava/lang/String;)V
+      77: aload_0       
+      78: getfield      #141                // Field g:I
+      81: invokevirtual #239                // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+      84: invokevirtual #50                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      87: invokestatic  #242                // Method android/util/Log.w:(Ljava/lang/String;Ljava/lang/String;)I
+      90: pop           
+      91: goto          16
+      94: iconst_1      
+      95: istore_1      
+      96: goto          16
+
+  protected int getAttribLocation(java.lang.String);
+    Code:
+       0: aload_0       
+       1: getfield      #141                // Field g:I
+       4: aload_1       
+       5: invokestatic  #247                // Method android/opengl/GLES20.glGetAttribLocation:(ILjava/lang/String;)I
+       8: istore_2      
+       9: iload_2       
+      10: bipush        -1
+      12: if_icmpne     44
+      15: new           #200                // class java/lang/RuntimeException
+      18: dup           
+      19: new           #36                 // class java/lang/StringBuilder
+      22: dup           
+      23: ldc           #249                // String cannot find 
+      25: invokespecial #41                 // Method java/lang/StringBuilder."<init>":(Ljava/lang/String;)V
+      28: aload_1       
+      29: invokevirtual #49                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      32: ldc           #251                // String .
+      34: invokevirtual #49                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      37: invokevirtual #50                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      40: invokespecial #203                // Method java/lang/RuntimeException."<init>":(Ljava/lang/String;)V
+      43: athrow        
+      44: iload_2       
+      45: ireturn       
+
+  protected int getUniformLocation(java.lang.String);
+    Code:
+       0: aload_0       
+       1: getfield      #141                // Field g:I
+       4: aload_1       
+       5: invokestatic  #255                // Method android/opengl/GLES20.glGetUniformLocation:(ILjava/lang/String;)I
+       8: istore_2      
+       9: iload_2       
+      10: bipush        -1
+      12: if_icmpne     44
+      15: new           #200                // class java/lang/RuntimeException
+      18: dup           
+      19: new           #36                 // class java/lang/StringBuilder
+      22: dup           
+      23: ldc           #249                // String cannot find 
+      25: invokespecial #41                 // Method java/lang/StringBuilder."<init>":(Ljava/lang/String;)V
+      28: aload_1       
+      29: invokevirtual #49                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      32: ldc           #251                // String .
+      34: invokevirtual #49                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      37: invokevirtual #50                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      40: invokespecial #203                // Method java/lang/RuntimeException."<init>":(Ljava/lang/String;)V
+      43: athrow        
+      44: iload_2       
+      45: ireturn       
+
+  protected abstract void onProgramBind();
+
+  protected abstract boolean onProgramCreated();
+
+  protected com.go.gl.graphics.GLShaderProgram onRender(com.go.gl.graphics.RenderContext);
+    Code:
+       0: aload_0       
+       1: areturn       
+
+  public void onTextureInvalidate();
+    Code:
+       0: aload_0       
+       1: iconst_0      
+       2: putfield      #141                // Field g:I
+       5: return        
+}

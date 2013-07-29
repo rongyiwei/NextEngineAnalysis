@@ -181,71 +181,69 @@ public abstract class GLShaderProgram
   }
 
   /**
-   * loadFromAssetsFile(...) TODO
-   * @param resources TODO 
-   * @param TODO 
-   * @return TODO 
+   * loadFromAssetsFile(...) 根据 Assets 文件名从  Assets 文件中提取出 Shader 源码字符串
+   * @param resources  Resources 是更底层的 Assets 文件的封装，通过 Resources::getAssets(...) 可获取 AssetsManager 进而访问更底层的 Assets 文件
+   * @param assetsFileName Assets 文件名
+   * @return 返回从 Assets 文件中提取出的 Shader 源码字符串
    */
-  public static String loadFromAssetsFile(Resources resources, String paramString)
+  public static String loadFromAssetsFile(Resources resources, String assetsFileName)
   {
-    InputStream local_2;  
-    ByteArrayOutputStream local_3;
-    int local_5;
-    Byte[] local_6;
-    String local_7;
-    String local_8;
-    InputStream local_14;
+    InputStream shaderSrcInputStream;  
+    ByteArrayOutputStream baos; //OutputStream 的内部实现为一个 byte array
+    int byteRead;
+    Byte[] byteArray;
+    String shaderSrc;
+    String sanitizedShaderSrc;
 
-    if (GLShaderProgramm.a != null) {
-	try {
-	    local_2 = new FileInputStream(String.valueof(GLShaderProgram.a) + paramString);
+    if (GLShaderProgramm.shaderSrcDir != null) { // 若 shaderSrcDir 不为 null (实际上一直为 null)
+	try { // 则直接在 shaderSrcDir 指定的文件系统目录下打开 Assets 文件
+	    shaderSrcInputStream = new FileInputStream(String.valueof(GLShaderProgram.shaderSrcDir) + assetsFileName);
 	} catch (FileNotFoundException e) {
 	    e.printStackTrace();
-	    throw new RuntimeException("GLShaderProgram: FileNotFoundException: open file: " + paramString);
+	    throw new RuntimeException("GLShaderProgram: FileNotFoundException: open file: " + assetsFileName);
 	}
-    } else {
+    } else { // 若 shaderSrcDir 为 null (实际上一直为 null)
 	try {
-	    local_14 = resources.getAssets().open(paramString);
-	    local_2 = local_14;
+	    shaderSrcInputStream = resources.getAssets().open(assetsFileName); //通过 AssetsManager 直接打开更为底层的 Assets 文件
 	} catch (IOException e) {
 	    e.printStackTrace();
-	    throw new RuntimeException("GLShaderProgram: IOException: open assets: " + paramString);
+	    throw new RuntimeException("GLShaderProgram: IOException: open assets: " + assetsFileName);
 	}
     }
     
-    local_3 = new ByteArrayOutputStream();
+    baos = new ByteArrayOutputStream();
     try {
-	local_5 = local_2.read();
-	while(local_5 != -1) {
-	    local_3.write(local_5);
-	    local_5 = local_2.read();
+	byteRead = shaderSrcInputStream.read(); // 从 Shader 源代码文件输入流读取第一个字节
+	while(byteRead != -1) { // 直到读取的字节为 -1, 即 EOF, 才停止
+	    baos.write(byteRead); // 将读取的字节写入 baos 输出流
+	    byteRead = shaderSrcInputStream.read(); // 读取下一个字节
 	}
     } catch (IOException e) {
 	e.printStackThree();
         throw new RuntimeException("GLShaderProgram: IOException: baos.write(ch);");
     }
     
-    local_6 = local_3.toByteArray();
+    byteArray = baos.toByteArray(); // 从 baos 中提取源码数据至一个 byte array 中
     try {
-	local_7 = new String(local_6, "UTF-8");
+	shaderSrc = new String(byteArray, "UTF-8"); //可见 Assets 文件以 UTF-8 编码 
     } catch (UnsupportedEncodingException e) {
 	e.printStackTrance();
 	throw new RuntimeException("GLShaderProgram: UnsupportedEncodingException");
     }
-    local_8 = local_7.replaceAll("\r\n", "\n");
+    sanitizedShaderSrc= shaderSrc.replaceAll("\r\n", "\n"); // 将 "\r\n" 统一替换为 "\n"
     try {
-	local_3.close();
+	baos.close(); // 关闭 byte array output stream
     } catch(IOException e) {
 	e.printStackTrace();
 	throw new RuntimeException("GLShaderProgram: IOException: baos.close();");
     }
     try {
-	local_2.close();
+	shaderSrcInputStream.close(); // 关闭 shader source input stream
     } catch (IOException e) {
 	e.printStackTrace();
 	throw new RuntimeException("GLShaderProgram: IOException: in.close();");
     }
-    
+    return sanitizedShaderSrc; // 返回 shader 源码字符串
   }
 
   /**
